@@ -24,6 +24,7 @@ describe("GET /invoices", function() {
         const response = await request(app).get(`/invoices`);
         expect(response.statusCode).toEqual(200);
         expect(response.body).toEqual({invoices: [testInvoice]});
+
     });
 });
 
