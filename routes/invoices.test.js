@@ -6,13 +6,16 @@ const db = require("../db");
 let testInvoice;
 
 beforeEach(async function() {
+    await db.query(
+        `INSERT INTO companies (code, name, description) VALUES ('tst','TestCo', 'test test test') RETURNING code, name, description`);
     let result = await db.query(
-        `INSERT INTO invoices (comp_code, amt) VALUES ('tst', 100)`);
+        `INSERT INTO invoices (comp_code, amt) VALUES ('tst', 100) RETURNING add_date, amt, comp_code, id, paid, paid_date`);
         testInvoice = result.rows[0];
-});
+    });
 
 afterEach(async function() {
     await db.query("DELETE FROM invoices");
+    await db.query("DELETE FROM companies");
 })
 
 afterAll(async function() {

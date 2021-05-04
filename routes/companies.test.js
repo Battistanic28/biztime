@@ -6,6 +6,8 @@ const db = require("../db");
 let testCompany;
 
 beforeEach(async function() {
+    await db.query("DELETE FROM companies");
+    await db.query("DELETE FROM invoices");
     let result = await db.query(
         `INSERT INTO companies (code, name, description) VALUES ('tst','TestCo', 'test test test') RETURNING code, name, description`);
         testCompany = result.rows[0];
